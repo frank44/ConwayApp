@@ -1,0 +1,69 @@
+Problem: Xap packaging failed. Object reference not set to an instance of an object.
+
+Notes: I believe I caused this by incorrectly changing the main page in the WMAppManifest.xml file. 
+       I wasn't able to solve this, I simple made a new project >_>
+
+---------------------------------------------------------------------------------------------------------------
+
+Problem: Changing the name of your app (as is displayed by the application list)
+
+Solution: In WMAppManifest.xml, under the <App> label, modify the Title attribute.
+
+---------------------------------------------------------------------------------------------------------------
+
+Problem: How to add a grid of buttons programmatically.
+
+Solution: Put this into the page constructor.
+
+	    Button[,] button = new Button[N, M];
+            for (int i = 0; i < N; i++)
+                for (int j = 0; j < M; j++)
+                {
+                    button[i, j] = new Button();
+                    button[i, j].Width = 100;
+                    button[i, j].Height = 100;
+                    button[i, j].HorizontalAlignment = HorizontalAlignment.Left;
+                    button[i, j].VerticalAlignment = VerticalAlignment.Top;
+                    button[i, j].Click += new RoutedEventHandler(toggle);
+                    button[i, j].Margin = new Thickness(75*i, 75*j, 0, 0); //not sure why this is 75 (but it works)
+                    
+                    this.LayoutRoot.Children.Add(button[i, j]);
+                }
+
+---------------------------------------------------------------------------------------------------------------
+
+Problem: Where to find default appbar images
+
+Solution: C:\Program Files\Microsoft SDKs\Windows Phone\v7.1\Icons\dark
+	  Also set the build action for each image to "Content"
+
+---------------------------------------------------------------------------------------------------------------
+
+Problem: Example of adding an appbar icon
+
+Solution: First add it in the xaml just before the </phone:PhoneApplicationPage> tag
+
+<phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton IconUri="/Images/play.png" Text="Start" Click="start"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/pause.png" Text="Pause" Click="pause"/>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+
+Then you also have to set the event listener, in this case it's called "start". This is done like this -
+
+private void start(object sender, EventArgs e)
+{ active = true; }
+
+---------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
