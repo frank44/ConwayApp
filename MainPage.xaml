@@ -16,7 +16,7 @@
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        
+        <Slider Height="84" HorizontalAlignment="Left" Margin="8,600,0,0" Name="slider1" VerticalAlignment="Top" Width="460" ValueChanged="slider1_ValueChanged" />
     </Grid>
  
     <!--Sample code showing usage of ApplicationBar-->

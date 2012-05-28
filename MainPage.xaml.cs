@@ -20,6 +20,9 @@ namespace ConwayApp
         int M = 22; //length
         DispatcherTimer timer = new DispatcherTimer();
 
+        //For the randomization feature
+        double spawnRate = 0.14;
+
         //Possible background states
         SolidColorBrush alive = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));
         SolidColorBrush dead = new SolidColorBrush(Color.FromArgb(255, 0, 0, 0));
@@ -51,8 +54,9 @@ namespace ConwayApp
                     this.LayoutRoot.Children.Add(button[i, j]);
                 }
 
+            slider1.Value = 5; //set to initial value
             timer.Tick += new EventHandler(simulateStep);
-            timer.Interval = TimeSpan.FromSeconds(.3);
+            timer.Interval = TimeSpan.FromSeconds(1-slider1.Value/10);
         }
 
         private void toggle(object sender, RoutedEventArgs e)
@@ -95,7 +99,7 @@ namespace ConwayApp
 
         private void AppBarStart(object sender, EventArgs e)
         {
-            timer.Start();   
+            timer.Start();
         }
 
         private void AppBarPause(object sender, EventArgs e)
@@ -116,10 +120,16 @@ namespace ConwayApp
             Random r = new Random();
             for (int i = 0; i < N; i++)
                 for (int j = 0; j < M; j++)
-                    if (r.NextDouble() < 0.5)
-                        button[i, j].Background = dead;
-                    else
+                    if (r.NextDouble() < spawnRate)
                         button[i, j].Background = alive;
+                    else
+                        button[i, j].Background = dead;
+        }
+
+        private void slider1_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            Slider s = (Slider)sender;
+            timer.Interval = TimeSpan.FromSeconds(1-s.Value / 10);
         }
     }
 }
