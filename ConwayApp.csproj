@@ -94,6 +94,7 @@
     <Content Include="Images\clear.png" />
     <Content Include="Images\play.png" />
     <Content Include="Images\pause.png" />
+    <Content Include="prev.txt" />
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
   <ItemGroup />

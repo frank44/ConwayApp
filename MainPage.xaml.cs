@@ -16,7 +16,8 @@ namespace ConwayApp
 {
     public partial class MainPage : PhoneApplicationPage
     {
-        int N = 6, M = 9;
+        int N = 18; //width
+        int M = 22; //length
         DispatcherTimer timer = new DispatcherTimer();
 
         //Possible background states
@@ -40,12 +41,12 @@ namespace ConwayApp
                 for (int j = 0; j < M; j++)
                 {
                     button[i, j] = new Button();
-                    button[i, j].Width = 100;
-                    button[i, j].Height = 100;
+                    button[i, j].Width = 50;
+                    button[i, j].Height = 50;
                     button[i, j].HorizontalAlignment = HorizontalAlignment.Left;
                     button[i, j].VerticalAlignment = VerticalAlignment.Top;
                     button[i, j].Click += new RoutedEventHandler(toggle);
-                    button[i, j].Margin = new Thickness(75*i, 75*j, 0, 0);
+                    button[i, j].Margin = new Thickness(25*i, 25*j, 0, 0);
                     
                     this.LayoutRoot.Children.Add(button[i, j]);
                 }
