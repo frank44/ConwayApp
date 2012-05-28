@@ -15,16 +15,18 @@ namespace ConwayApp
 {
     public partial class MainPage : PhoneApplicationPage
     {
-        int N = 6, M = 10;
+        int N = 6, M = 9;
         SolidColorBrush alive = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));
         SolidColorBrush dead = new SolidColorBrush(Color.FromArgb(255, 0, 0, 0));
+        bool active = false;
+        Button[,] button;
 
         // Constructor
         public MainPage()
         {
             InitializeComponent();
 
-            Button[,] button = new Button[N, M];
+            button = new Button[N, M];
             for (int i = 0; i < N; i++)
                 for (int j = 0; j < M; j++)
                 {
@@ -50,6 +52,32 @@ namespace ConwayApp
             else b.Background = alive;
         }
 
+        private void AppBarStart(object sender, EventArgs e)
+        {
+            active = true; 
+        }
 
+        private void AppBarPause(object sender, EventArgs e)
+        {
+            active = false;
+        }
+
+        private void AppBarClear(object sender, EventArgs e)
+        {
+            for (int i = 0; i < N; i++)
+                for (int j = 0; j < M; j++)
+                    button[i, j].Background = dead;
+        }
+
+        private void AppBarRandomize(object sender, EventArgs e)
+        {
+            Random r = new Random();
+            for (int i = 0; i < N; i++)
+                for (int j = 0; j < M; j++)
+                    if (r.NextDouble() < 0.5)
+                        button[i, j].Background = dead;
+                    else
+                        button[i, j].Background = alive;
+        }
     }
 }
