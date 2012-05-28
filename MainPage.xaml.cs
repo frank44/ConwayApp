@@ -67,6 +67,9 @@ namespace ConwayApp
             else b.Background = alive;
         }
 
+        private bool isValid(int i, int j)
+        { return i >= 0 && i < N && j >= 0 && j < M; }
+
         private bool isAlive(int i, int j)
         { return button[i, j].Background == alive; }
 
@@ -82,9 +85,9 @@ namespace ConwayApp
                     bool isLiving = isAlive(i, j);
                     for (int k = 0; k < di.Length; k++)
                     {
-                        int ni = (i + di[k] + N) % N;
-                        int nj = (j + dj[k] + M) % M;
-                        if (isAlive(ni, nj))
+                        int ni = (i + di[k]);
+                        int nj = (j + dj[k]);
+                        if (isValid(ni, nj) && isAlive(ni, nj))
                             count++;
                     }
                         
