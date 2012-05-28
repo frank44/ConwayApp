@@ -10,16 +10,25 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
+using System.Windows.Threading;
 
 namespace ConwayApp
 {
     public partial class MainPage : PhoneApplicationPage
     {
         int N = 6, M = 9;
+        DispatcherTimer timer = new DispatcherTimer();
+
+        //Possible background states
         SolidColorBrush alive = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));
         SolidColorBrush dead = new SolidColorBrush(Color.FromArgb(255, 0, 0, 0));
-        bool active = false;
+        
+        //Grid of buttons
         Button[,] button;
+
+        //Directional arrays
+        int[] di = {-1, -1, -1, 0, 1, 1, 1, 0};
+        int[] dj = {-1, 0, 1, 1, 1, 0, -1, -1};
 
         // Constructor
         public MainPage()
@@ -40,30 +49,62 @@ namespace ConwayApp
                     
                     this.LayoutRoot.Children.Add(button[i, j]);
                 }
-            
+
+            timer.Tick += new EventHandler(simulateStep);
+            timer.Interval = TimeSpan.FromSeconds(.3);
         }
 
         private void toggle(object sender, RoutedEventArgs e)
         {
             Button b = (Button)sender;
             
-            if (b.Background == alive)
-                b.Background = dead;
+            if (isAlive(b)) b.Background = dead;
             else b.Background = alive;
+        }
+
+        private bool isAlive(int i, int j)
+        { return button[i, j].Background == alive; }
+
+        private bool isAlive(Button b)
+        { return b.Background == alive; }
+
+        private void simulateStep(object sender, EventArgs e)
+        {
+            for (int i=0; i<N; i++)
+                for (int j = 0; j < M; j++)
+                {
+                    int count = 0;
+                    bool isLiving = isAlive(i, j);
+                    for (int k = 0; k < di.Length; k++)
+                    {
+                        int ni = (i + di[k] + N) % N;
+                        int nj = (j + dj[k] + M) % M;
+                        if (isAlive(ni, nj))
+                            count++;
+                    }
+                        
+                    if (isLiving && count < 2) //under-population
+                        button[i, j].Background = dead;
+                    else if (isLiving && count > 3) //overcrowding
+                        button[i, j].Background = dead;
+                    else if (!isLiving && count == 3) //reproduction
+                        button[i, j].Background = alive;
+                }
         }
 
         private void AppBarStart(object sender, EventArgs e)
         {
-            active = true; 
+            timer.Start();   
         }
 
         private void AppBarPause(object sender, EventArgs e)
         {
-            active = false;
+            timer.Stop();
         }
 
         private void AppBarClear(object sender, EventArgs e)
         {
+            timer.Stop();
             for (int i = 0; i < N; i++)
                 for (int j = 0; j < M; j++)
                     button[i, j].Background = dead;
