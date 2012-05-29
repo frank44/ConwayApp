@@ -24,7 +24,7 @@ namespace ConwayApp
         double spawnRate = 0.14;
 
         //Possible background states
-        SolidColorBrush alive = new SolidColorBrush(Color.FromArgb(255, 255, 255, 0));
+        SolidColorBrush alive = new SolidColorBrush(Color.FromArgb(255, 255, 215, 0));
         SolidColorBrush dead = new SolidColorBrush(Color.FromArgb(255, 0, 0, 0));
         
         //Grid of buttons
