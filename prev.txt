@@ -34,7 +34,7 @@ Solution: Put this into the page constructor.
 
 Problem: Where to find default appbar images
 
-Solution: C:\Program Files\Microsoft SDKs\Windows Phone\v7.1\Icons\dark
+Solution: C:\Program Files (x86)\Microsoft SDKs\Windows Phone\v7.1\Icons\dark
 	  Also set the build action for each image to "Content"
 
 ---------------------------------------------------------------------------------------------------------------
